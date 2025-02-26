@@ -4,6 +4,7 @@ import { LeaveScreen } from "./components/screens/LeaveScreen";
 import { JoiningScreen } from "./components/screens/JoiningScreen";
 import { ILSContainer } from "./interactive-live-streaming/ILSContainer";
 import { MeetingAppProvider } from "./MeetingAppContextDef";
+import MusicPlayer from "./components/MusicPlayer"; // Add this import
 
 const App = () => {
   const [token, setToken] = useState("");
@@ -36,48 +37,51 @@ const App = () => {
   return (
     <>
       {isMeetingStarted && token.length > 0 ? (
-        <MeetingAppProvider
-          selectedMic={selectedMic}
-          selectedWebcam={selectedWebcam}
-          initialMicOn={micOn}
-          initialWebcamOn={webcamOn}
-        >
-          <MeetingProvider
-            config={{
-              meetingId,
-              micEnabled: micOn,
-              webcamEnabled: webcamOn,
-              name: participantName ? participantName : "TestUser",
-              mode: meetingMode,
-              multiStream: false,
-            }}
-            token={token}
-            reinitialiseMeetingOnConfigChange={true}
-            joinWithoutUserInteraction={true}
+        <>
+          <MeetingAppProvider
+            selectedMic={selectedMic}
+            selectedWebcam={selectedWebcam}
+            initialMicOn={micOn}
+            initialWebcamOn={webcamOn}
           >
-            <ILSContainer
-              onMeetingLeave={() => {
-                setToken("");
-                setMeetingId("");
-                setParticipantName("");
-                setWebcamOn(false);
-                setMicOn(false);
-                setMeetingStarted(false);
+            <MeetingProvider
+              config={{
+                meetingId,
+                micEnabled: micOn,
+                webcamEnabled: webcamOn,
+                name: participantName ? participantName : "TestUser",
+                mode: meetingMode,
+                multiStream: false,
               }}
-              setIsMeetingLeft={setIsMeetingLeft}
-              selectedMic={selectedMic}
-              selectedWebcam={selectedWebcam}
-              selectWebcamDeviceId={selectWebcamDeviceId}
-              setSelectWebcamDeviceId={setSelectWebcamDeviceId}
-              selectMicDeviceId={selectMicDeviceId}
-              setSelectMicDeviceId={setSelectMicDeviceId}
-              micEnabled={micOn}
-              webcamEnabled={webcamOn}
-              meetingMode={meetingMode}
-              setMeetingMode={setMeetingMode}
-            />
-          </MeetingProvider>
-        </MeetingAppProvider>
+              token={token}
+              reinitialiseMeetingOnConfigChange={true}
+              joinWithoutUserInteraction={true}
+            >
+            <ILSContainer
+                onMeetingLeave={() => {
+                  setToken("");
+                  setMeetingId("");
+                  setParticipantName("");
+                  setWebcamOn(false);
+                  setMicOn(false);
+                  setMeetingStarted(false);
+                }}
+                setIsMeetingLeft={setIsMeetingLeft}
+                selectedMic={selectedMic}
+                selectedWebcam={selectedWebcam}
+                selectWebcamDeviceId={selectWebcamDeviceId}
+                setSelectWebcamDeviceId={setSelectWebcamDeviceId}
+                selectMicDeviceId={selectMicDeviceId}
+                setSelectMicDeviceId={setSelectMicDeviceId}
+                micEnabled={micOn}
+                webcamEnabled={webcamOn}
+                meetingMode={meetingMode}
+                setMeetingMode={setMeetingMode}
+              />
+            </MeetingProvider>
+          </MeetingAppProvider>
+          <MusicPlayer /> {/* Add this line */}
+        </>
       ) : isMeetingLeft ? (
         <LeaveScreen setIsMeetingLeft={setIsMeetingLeft} />
       ) : (

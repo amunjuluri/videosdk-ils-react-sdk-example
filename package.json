@@ -9,6 +9,7 @@
     "@popperjs/core": "^2.11.8",
     "@videosdk.live/react-sdk": "^0.2.0",
     "@windmill/react-ui": "^0.6.0",
+    "howler": "^2.2.4",
     "lottie-react": "^2.4.0",
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-loader": "^8.1.1",
